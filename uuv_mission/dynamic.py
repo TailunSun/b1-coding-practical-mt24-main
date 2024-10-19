@@ -76,15 +76,15 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # Load the CSV data using pandas
-        data = pd.read_csv(file_name)
-
-        # Extract necessary columns from the CSV (adjust column names as needed)
-        reference = data['reference'].to_numpy()      # Convert to numpy array
-        cave_height = data['cave_height'].to_numpy()  # Convert to numpy array
-        cave_depth = data['cave_depth'].to_numpy()    # Convert to numpy array
-
-        # Return an instance of Mission class with the loaded data
+        # Read the CSV file using pandas
+        df = pd.read_csv(file_name)
+        
+        # Extract the columns for reference, cave_height, and cave_depth
+        reference = df['reference'].to_numpy()
+        cave_height = df['cave_height'].to_numpy()
+        cave_depth = df['cave_depth'].to_numpy()
+        
+        # Return an instance of the Mission class
         return cls(reference, cave_height, cave_depth)
 
 
@@ -107,7 +107,11 @@ class ClosedLoop:
         for t in range(T):
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
-            # Call your controller here
+
+            # Call the controller to compute the control action
+            actions[t] = self.controller.compute_control_action(mission.reference[t], observation_t)
+            
+            # Update the plant state with the control action and disturbance
             self.plant.transition(actions[t], disturbances[t])
 
         return Trajectory(positions)
@@ -115,3 +119,4 @@ class ClosedLoop:
     def simulate_with_random_disturbances(self, mission: Mission, variance: float = 0.5) -> Trajectory:
         disturbances = np.random.normal(0, variance, len(mission.reference))
         return self.simulate(mission, disturbances)
+
