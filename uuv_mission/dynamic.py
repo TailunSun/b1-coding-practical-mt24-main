@@ -32,7 +32,7 @@ class Submarine:
         return self.pos_y
     
     def get_position(self) -> tuple:
-        return self.pos_x, self.pos_y
+        return self.pos_x, self.pos_y 
     
     def reset_state(self):
         self.pos_x = 0

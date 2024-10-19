@@ -31,7 +31,7 @@ def generate_reference_and_limits(duration, scale):
     upper = reference + upper_margin
     lower = reference - lower_margin
 
-    return reference, upper, lower
+    return reference, upper, lower 
     
 def plot_reference_and_terrain(reference, upper, lower):
     plt.plot(reference, 'b')
