@@ -115,3 +115,12 @@ class ClosedLoop:
     def simulate_with_random_disturbances(self, mission: Mission, variance: float = 0.5) -> Trajectory:
         disturbances = np.random.normal(0, variance, len(mission.reference))
         return self.simulate(mission, disturbances)
+
+
+
+mission = Mission.from_csv('data/mission.csv')
+
+# Print the first few elements of each attribute to verify
+print(mission.reference[:7])  # Check the first 5 reference points
+print(mission.cave_height[:7])  # Check the first 5 cave height values
+print(mission.cave_depth[:7])  # Check the first 5 cave depth values
