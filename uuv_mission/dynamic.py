@@ -76,7 +76,17 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        pass
+        # Load the CSV data using pandas
+        data = pd.read_csv(file_name)
+
+        # Extract necessary columns from the CSV (adjust column names as needed)
+        reference = data['reference'].to_numpy()      # Convert to numpy array
+        cave_height = data['cave_height'].to_numpy()  # Convert to numpy array
+        cave_depth = data['cave_depth'].to_numpy()    # Convert to numpy array
+
+        # Return an instance of Mission class with the loaded data
+        return cls(reference, cave_height, cave_depth)
+
 
     
 class ClosedLoop:
