@@ -1,11 +1,11 @@
 class PDController:
-    def __init__(self, kp: float = 0.15, kd: float = 0.6):
+    def __init__(self, Kp: float = 0.15, Kd: float = 0.6):
         """
         Initialize the PD controller with given proportional (kp) and derivative (kd) gains.
         Defaults are set to KP = 0.15 and KD = 0.6.
         """
-        self.kp = kp  # Proportional gain
-        self.kd = kd  # Derivative gain
+        self.Kp = Kp  # Proportional gain
+        self.Kd = Kd  # Derivative gain
         self.previous_error = 0  # Initialize previous error as zero
 
     def compute_control_action(self, reference: float, current_output: float) -> float:
@@ -26,7 +26,7 @@ class PDController:
         derivative_error = current_error - self.previous_error
 
         # PD control action formula
-        control_action = (self.kp * current_error) + (self.kd * derivative_error)
+        control_action = (self.Kp * current_error) + (self.Kd * derivative_error)
 
         # Update previous error for the next time step
         self.previous_error = current_error
