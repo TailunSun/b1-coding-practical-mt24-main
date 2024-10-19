@@ -76,15 +76,15 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # Load the CSV data using pandas
-        data = pd.read_csv(file_name)
-
-        # Extract necessary columns from the CSV (adjust column names as needed)
-        reference = data['reference'].to_numpy()      # Convert to numpy array
-        cave_height = data['cave_height'].to_numpy()  # Convert to numpy array
-        cave_depth = data['cave_depth'].to_numpy()    # Convert to numpy array
-
-        # Return an instance of Mission class with the loaded data
+        # Read the CSV file using pandas
+        df = pd.read_csv(file_name)
+        
+        # Extract the columns for reference, cave_height, and cave_depth
+        reference = df['reference'].to_numpy()
+        cave_height = df['cave_height'].to_numpy()
+        cave_depth = df['cave_depth'].to_numpy()
+        
+        # Return an instance of the Mission class
         return cls(reference, cave_height, cave_depth)
 
 
@@ -116,11 +116,3 @@ class ClosedLoop:
         disturbances = np.random.normal(0, variance, len(mission.reference))
         return self.simulate(mission, disturbances)
 
-
-
-mission = Mission.from_csv('data/mission.csv')
-
-# Print the first few elements of each attribute to verify
-print(mission.reference[:7])  # Check the first 5 reference points
-print(mission.cave_height[:7])  # Check the first 5 cave height values
-print(mission.cave_depth[:7])  # Check the first 5 cave depth values
